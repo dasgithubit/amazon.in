@@ -89,8 +89,8 @@ document.querySelectorAll('.js-cart-button')
 
         else {
             cart.push({
-                productId : productId,
-                quantity : quantity
+                productId,
+                quantity
             });
         }
 
