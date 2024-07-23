@@ -24,11 +24,11 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).tofixed(2)}
+            $${(product.priceCents/100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -69,6 +69,10 @@ document.querySelectorAll('.js-cart-button')
         //  product has a same name but id will unquie so increment the product using the ID
         const productId = button.dataset.addCart;
 
+        // selector quantity is get by using the dom
+        // dom gives us the value in the string so convert it into number
+        const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+
         let matchingItem;
 
         cart.forEach((item) => {
@@ -80,15 +84,16 @@ document.querySelectorAll('.js-cart-button')
 
     
         if(matchingItem) {
-            matchingItem.quantity++;
+            matchingItem.quantity+= matchingItem.quantity;
         }
 
         else {
             cart.push({
                 productId : productId,
-                quantity : 1
+                quantity : quantity
             });
         }
+
 
         let cartQuantity =0;
 
@@ -96,6 +101,8 @@ document.querySelectorAll('.js-cart-button')
             cartQuantity += item.quantity;
 
         });
+
+        console.log(cart);
 
         document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
     });
