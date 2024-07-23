@@ -1,6 +1,5 @@
 // store the data
 
-
 // Generate Html page 
 let html = '';
 products.forEach((product) => {
@@ -25,7 +24,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${product.priceCents/100}
+            $${(product.priceCents/100).tofixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -50,12 +49,58 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-cart-button" data-add-cart="${product.id}">
             Add to Cart
           </button>
         </div>`
 
 });
 
+// we have html attribute that is  data-attribute 
+// when I click on the add to card it will provide me the data of that list
+
 document.querySelector('.js-products-grid').innerHTML = html;
+
+
+document.querySelectorAll('.js-cart-button')
+.forEach((button) => {
+    button.addEventListener('click', () => {
+
+        //  product has a same name but id will unquie so increment the product using the ID
+        const productId = button.dataset.addCart;
+
+        let matchingItem;
+
+        cart.forEach((item) => {
+            
+            if(productId === item.productId) {
+                matchingItem = item;
+            }
+        });
+
+    
+        if(matchingItem) {
+            matchingItem.quantity++;
+        }
+
+        else {
+            cart.push({
+                productId : productId,
+                quantity : 1
+            });
+        }
+
+        let cartQuantity =0;
+
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
+
+        });
+
+        document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
+    });
+
+});
+
+
 
