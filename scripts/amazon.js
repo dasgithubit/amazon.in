@@ -1,6 +1,5 @@
-// import {cart} from "../data/cart";
-// import {products} from "../data/products";
-
+import {cart} from "../data/cart.js";
+import {products} from "../data/products.js";
 
 
 // our code doesn't look organized so we would be using funcion to store the data

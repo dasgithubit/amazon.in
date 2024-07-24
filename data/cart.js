@@ -1,6 +1,6 @@
-// Cart data insisde the cart array 
+// Cart data inside the cart array 
 
-const cart = [{
+export const cart = [{
     productId : "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity : 2
 },
@@ -14,14 +14,14 @@ const cart = [{
 
 
 
-function addToCart(productId, quantity) {
+export function addToCart(productId, quantity) {
 
     let matchingItem;
 
-    cart.forEach((item) => {
+    cart.forEach((cartItem) => {
         
-        if(productId === item.productId) {
-            matchingItem = item;
+        if(productId === cartItem.productId) {
+            matchingItem = cartItem;
         }
     });
 
