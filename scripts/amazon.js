@@ -1,7 +1,56 @@
-// store the data
+// import {cart} from "../data/cart";
+// import {products} from "../data/products";
+
+
+
+// our code doesn't look organized so we would be using funcion to store the data
+
+function addCartQunatity(quantity) {
+
+      let cartQuantity = 0;
+
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
+
+        });
+
+        document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
+
+}
+
+// storing the timeout in object because each product has it own timeout
+
+function displayAddedMsg(productId) {
+
+      const addMessagetimeOut = {};
+
+      // Check if there's a previous timeout for this
+      // product. If there is, we should stop it.
+      const previousTimeoutId = addMessagetimeOut[productId];
+
+      if(previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+
+      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+
+      // adding a new class name for styling
+
+      addedMessage.classList.add('added-to-cart-visible');
+
+      const timeOutId = setTimeout(() => {
+        addedMessage.classList.remove('added-to-cart-visible');
+      },2000);
+
+      // storing in the addMessagetimeOut object along with the poductId
+      addMessagetimeOut[productId] = timeOutId;
+
+}
+
 
 // Generate Html page 
 let html = '';
+
 products.forEach((product) => {
     // console.log(product);
 
@@ -44,7 +93,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -57,10 +106,11 @@ products.forEach((product) => {
 });
 
 // we have html attribute that is  data-attribute 
-// when I click on the add to card it will provide me the data of that list
+// when I click on the add to card it will provide me the data(productId) of that list
 
 document.querySelector('.js-products-grid').innerHTML = html;
 
+// Select add to cart using the forEach loop
 
 document.querySelectorAll('.js-cart-button')
 .forEach((button) => {
@@ -71,43 +121,21 @@ document.querySelectorAll('.js-cart-button')
 
         // selector quantity is get by using the dom
         // dom gives us the value in the string so convert it into number
+
         const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
 
-        let matchingItem;
+      // function 
+        addToCart(productId, quantity);
 
-        cart.forEach((item) => {
-            
-            if(productId === item.productId) {
-                matchingItem = item;
-            }
-        });
+        addCartQunatity(quantity);
 
-    
-        if(matchingItem) {
-            matchingItem.quantity+= matchingItem.quantity;
-        }
+        displayAddedMsg(productId);
 
-        else {
-            cart.push({
-                productId,
-                quantity
-            });
-        }
-
-
-        let cartQuantity =0;
-
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-
-        });
-
-        console.log(cart);
-
-        document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
     });
 
 });
+
+
 
 
 
