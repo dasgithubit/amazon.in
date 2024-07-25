@@ -39,12 +39,6 @@ export function addToCart(productId, quantity) {
 }
 
 
-export function currencyFormat(priceCents) {
-
-    return (priceCents/100).toFixed(2);
-}
-
-
 export function removeFromCart(productId) {
 
     const updatedCart = [];
