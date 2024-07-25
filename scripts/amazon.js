@@ -1,5 +1,6 @@
-import {cart} from "../data/cart.js";
+import {cart, addToCart, currencyFormat} from "../data/cart.js";
 import {products} from "../data/products.js";
+
 
 
 // our code doesn't look organized so we would be using funcion to store the data
@@ -72,7 +73,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${currencyFormat(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
