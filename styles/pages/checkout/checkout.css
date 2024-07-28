@@ -106,6 +106,7 @@
 
 .product-name {
   font-weight: 700;
+
   margin-bottom: 8px;
 }
 
@@ -209,3 +210,31 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+.quantity-input { 
+  width: 30px;
+  display: none;
+}
+
+
+.is-editing-quantity .quantity-input {
+  display: initial;
+  
+}
+
+.js-save-quantity-link{
+  display: none;
+}
+
+.is-editing-quantity .js-save-quantity-link {
+  display: initial;
+  
+}
+
+.js-hidden-quantity, .js-hidden-update{
+  display: none;
+}
+
+
+
+

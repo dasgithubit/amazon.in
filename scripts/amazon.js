@@ -1,4 +1,4 @@
-import {cart, addToCart} from "../data/cart.js";
+import {cart, addToCart, calculateCartQuantity} from "../data/cart.js";
 import {products} from "../data/products.js";
 import {currencyFormat} from "./utils/money.js"
 
@@ -6,18 +6,17 @@ import {currencyFormat} from "./utils/money.js"
 
 // our code doesn't look organized so we would be using funcion to store the data
 
-function addCartQunatity(quantity) {
+function updateCartQuantity() {
 
-      let cartQuantity = 0;
+    const cartQuantity = calculateCartQuantity();
 
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-
-        });
-
-        document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
+    document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
 
 }
+
+// when the page load it should display the cart Quantity
+updateCartQuantity();
+
 
 // storing the timeout in object because each product has it own timeout
 
@@ -47,6 +46,7 @@ function displayAddedMsg(productId) {
       addMessagetimeOut[productId] = timeOutId;
 
 }
+
 
 
 // Generate Html page 
@@ -128,8 +128,10 @@ document.querySelectorAll('.js-cart-button')
       // function 
         addToCart(productId, quantity);
 
-        addCartQunatity(quantity);
+        // quantity will be update on the header of the amazon
+        updateCartQuantity();
 
+        // display added msg on the page using the classList and set the opacity to 1
         displayAddedMsg(productId);
 
     });
