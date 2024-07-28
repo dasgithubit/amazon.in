@@ -15,7 +15,6 @@ export let cart = JSON.parse(localStorage.getItem('cart')) || [{
 
 
 // localStorage is used to store the data permanently
-
 function saveData() {
     localStorage.setItem('cart',JSON.stringify(cart));
 }
@@ -100,6 +99,23 @@ export function calculateCartQuantity() {
     });
 
     return cartQuantity;
+}
+
+export function updateDeliveryOption(productId, deliveryId) {
+
+    let matchingItem;
+
+    cart.forEach((cartItem) => {
+        
+        if(productId === cartItem.productId) {
+            matchingItem = cartItem;
+        }
+    });
+
+    matchingItem.deliveryOptionId = deliveryId;
+
+    saveData();
+
 }
 
 
