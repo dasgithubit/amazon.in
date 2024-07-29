@@ -7,6 +7,8 @@ export function renderPaymentSummary() {
 
     let totalCartPrice = 0;
     let deliveryPrice = 0;
+    let cartQunatity = 0;
+
     cart.forEach((cartItem) => {
 
         const product = getProduct(cartItem.productId);
@@ -15,7 +17,7 @@ export function renderPaymentSummary() {
         const delivery = getDelivery(cartItem.deliveryOptionId);
         deliveryPrice += delivery.priceCents;
 
-
+        cartQunatity += cartItem.quantity;
     });
 
     const totalPriceBeforeTax = totalCartPrice + deliveryPrice;
@@ -29,7 +31,7 @@ export function renderPaymentSummary() {
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${cartQunatity}):</div>
             <div class="payment-summary-money">${currencyFormat(totalCartPrice)}</div>
           </div>
 
@@ -60,10 +62,7 @@ export function renderPaymentSummary() {
     
     document.querySelector('.js-payment-summary')
     .innerHTML = orderSummaryHtml;
-    renderPaymentSummary();
 
-    
 }
 
-renderPaymentSummary();
 

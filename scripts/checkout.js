@@ -1,6 +1,9 @@
 import {renderCartSummary} from "./checkout/cartSummary.js";
 import {renderPaymentSummary} from "./checkout/paymentSummary.js"
+import {renderCheckoutHeader} from "./checkout/checkoutHeader.js"
 
 renderCartSummary();
 
 renderPaymentSummary();
+
+renderCheckoutHeader();
