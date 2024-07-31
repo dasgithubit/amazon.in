@@ -147,15 +147,13 @@ function Cart() {
 
 }
 
-// Remember functions are values so it can stored inside the variable
+
+
 const cart = Cart();
-
 cart.loadFromStorage('cart-oop');
-console.log(cart);
-
-
 const business = Cart();
-business.loadFromStorage('businessCart-oop');
+business.loadFromStorage('cart-business');
+console.log(cart);
 console.log(business);
 
 
