@@ -15,4 +15,12 @@ describe('Test suite: currency format', () => {
     it('works with round of cents', () => {
         expect(currencyFormat(2000.5)).toEqual('20.01');
     });
+    
+    it('works with round of cents', () => {
+        expect(currencyFormat(2000.4)).toEqual('20.00');
+    });
+
+    it('work with negative number', () => {
+        expect(currencyFormat(-200.3)).toEqual('-2.00');
+    });
 });

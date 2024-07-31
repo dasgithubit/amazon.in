@@ -25,10 +25,21 @@ export function getDelivery(deliveryId) {
         if(option.id === deliveryId) {
             deliveryOption = option;
         }
+        
     });
 
     return deliveryOption;
 
+}
+
+export function validDeliveryOption(deliveryId) {
+    let found = false;
+    deliveryOptions.forEach((option) => {
+        if(option.id === deliveryId){
+            found = true;
+        }
+    });
+    return found;
 }
 
 export function calculateDeliveryDate(deliveryOption) {

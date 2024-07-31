@@ -1,5 +1,7 @@
 // Cart data inside the cart array 
 
+import { validDeliveryOption } from "./deliveryOptions.js";
+
 export let cart;
 
 
@@ -93,8 +95,6 @@ export function updateQuantity(productId, newQuantity) {
     if(matchingItem) {
         matchingItem.quantity = newQuantity;
     }
-    
-
     saveData(); 
 }
 
@@ -112,18 +112,30 @@ export function calculateCartQuantity() {
 
 export function updateDeliveryOption(productId, deliveryId) {
 
-    let matchingItem;
+    if(!productId) {
+        return;
+    }
 
+    if(!validDeliveryOption(deliveryId)) {
+        return;
+    }
+
+    let matchingItem;
+    
     cart.forEach((cartItem) => {
         
         if(productId === cartItem.productId) {
-            matchingItem = cartItem;
+            matchingItem = cartItem;   
         }
     });
 
-    matchingItem.deliveryOptionId = deliveryId;
+    if(matchingItem) {
 
-    saveData();
+        matchingItem.deliveryOptionId = deliveryId;
+        saveData();
+
+    }
+    
 
 }
 

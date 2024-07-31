@@ -1,5 +1,6 @@
 import { renderCartSummary } from "../../scripts/checkout/cartSummary.js";
 import { loadFromStorage,cart } from "../../data/cart.js";
+import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 
 
 describe('test suite: Order Summary', () => {
@@ -35,6 +36,7 @@ describe('test suite: Order Summary', () => {
 
         renderCartSummary();
 
+        renderPaymentSummary();
 });
 
     it('display order summary', () => {
@@ -45,7 +47,11 @@ describe('test suite: Order Summary', () => {
 
         expect(document.querySelector(`.js-product-quantity-${productId2}`).innerText).toContain('Quantity: 1');
 
+        expect(document.querySelector(`.js-product-name-${productId1}`).innerText).toContain('Black and Gray Athletic Cotton Socks - 6 Pairs');
 
+        expect(document.querySelector(`.js-product-Price-${productId1}`).innerText).toEqual('$10.90');
+
+        expect(document.querySelector(`.js-product-Price-${productId2}`).innerText).toEqual('$20.95');
     });
 
 
@@ -60,12 +66,29 @@ describe('test suite: Order Summary', () => {
         expect(document.querySelector(`.js-cart-container-${productId2}`)).not.toEqual(null);
 
         expect(cart[0].productId).toEqual(productId2);
+        expect(cart.length).toEqual(1);
+
+        expect(document.querySelector(`.js-product-name-${productId2}`).innerText).toContain('Intermediate Size Basketball');
+
+        expect(document.querySelector(`.js-product-Price-${productId2}`).innerText).toEqual('$20.95');
 
         
     });
 
-    afterEach(() => {
-        document.querySelector('.js-test-container').innerHTML = '';
-    })
+    // afterEach(() => {
+    //     document.querySelector('.js-test-container').innerHTML = '';
+    // })
+
+
+    it('updating the delivery option', () => {
+
+        document.querySelector(`.js-test-delivery-option-${productId1}-${3}`).click();
+        expect(document.querySelector(`.js-delivery-option-${productId1}-${3}`).checked).toEqual(true);
+        expect(cart[0].deliveryOptionId).toEqual('3');
+        expect(cart.length).toEqual(2);
+        expect(cart[0].productId).toEqual(productId1);
+        expect(document.querySelector(`.js-payment-summary`).innerText).toContain('14.98');
+        expect(document.querySelector('.js-total-price').innerHTML).toEqual('63.50');
+    });
 
 });
