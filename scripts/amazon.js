@@ -94,6 +94,10 @@ products.forEach((product) => {
 
           ${product.getSizeChart()}
 
+          ${product.getInstructionLink()}
+
+          ${product.getWarrantyLink()}
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart js-added-to-cart-${product.id}">

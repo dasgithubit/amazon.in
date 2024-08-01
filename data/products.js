@@ -14,7 +14,7 @@ export function getProduct(productId) {
   return matchingItem;
 }
 
-class Product{
+export class Product{
 
   id;
   image;
@@ -43,8 +43,18 @@ class Product{
     return '';
   }
 
+  getInstructionLink() {
+    return '';
+  }
+
+  getWarrantyLink() {
+    return '';
+  }
+
   
 }
+
+
 
 // Class provide us inbuit fetaure to get the today's date
 // date has a inbuilt method
@@ -88,7 +98,7 @@ class Product{
 
 // some product has more specification here we can use the concept inheritance
 
-class Clothing extends Product {
+export class Clothing extends Product {
 
     sizeChartLink;
 
@@ -100,6 +110,34 @@ class Clothing extends Product {
     getSizeChart() {
       return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`;
     }
+
+    getInstructionLink() {
+      return '';
+    }
+
+    getWarrantyLink(){
+      return '';
+    }
+}
+
+export class Appliance extends Product{
+
+    instructionLink;
+    warrantyLink;
+    constructor(productDetails) {
+      super(productDetails);
+      this.instructionLink = productDetails.instructionLink;
+      this.warrantyLink = productDetails.warrantyLink;
+    }
+
+    getInstructionLink() {
+      return `<a href="${this.instructionLink}" target="_blank">Instructions</a>`
+      
+    }
+    getWarrantyLink() {
+      return `<a href="${this.warrantyLink}" target="_blank">Warranty</a>`;
+    }
+
 }
 
 
@@ -183,7 +221,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type : ["instructionLink", "warrantyLink"],
+    instructionLink : "images/appliance-instructions.png",
+    warrantyLink : "images/appliance-warranty.png"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -368,7 +409,10 @@ export const products = [
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    type : ["instructionLink", "warrantyLink"],
+    instructionLink : "images/appliance-instructions.png",
+    warrantyLink : "images/appliance-warranty.png"
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -733,7 +777,10 @@ export const products = [
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type : ["instructionLink", "warrantyLink"],
+    instructionLink : "images/appliance-instructions.png",
+    warrantyLink : "images/appliance-warranty.png"
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -783,6 +830,12 @@ export const products = [
     ]
   }
 ].map((productDetails)=> {
+
+  if (Array.isArray(productDetails.type) &&
+      productDetails.type.includes('instructionLink') &&
+      productDetails.type.includes('warrantyLink')) {
+    return new Appliance(productDetails);
+  }
 
   if(productDetails.type === 'clothing') {
       return new Clothing(productDetails);
