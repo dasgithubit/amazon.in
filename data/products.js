@@ -39,7 +39,67 @@ class Product{
     return `$${currencyFormat(this.priceCents)}`;
   }
 
+  getSizeChart() {
+    return '';
+  }
+
   
+}
+
+// Class provide us inbuit fetaure to get the today's date
+// date has a inbuilt method
+// const date = new Date();
+// console.log(date.toLocaleDateString());
+// console.log(date);
+
+// More concepts regarding the this keywords
+// ths keyword is used to access the object class property 
+// this keyword can be used anywhere in the javaScript
+
+// console.log(this);
+// It will show undefined beacuse it cannot locate the object
+
+// Normal function
+// function name() {
+//   console.log(this);
+// }
+// In the normal function it show us undefined because it cannot access the object.
+// but we can change the value of the this keyword in normal function using the call().
+// name.call('subrata');
+
+// But in the arrow function we cannot change the this keyword it will point to the outer this
+
+// const object = {
+
+//   method1(){
+//     console.log(this);
+
+//     [1,2,3].forEach(() => {
+//         console.log(this);
+//     });
+  
+//   } 
+// }
+
+// object.method1();
+
+// Inside arrow function this will not show undefined it will point out to the outside object
+
+
+// some product has more specification here we can use the concept inheritance
+
+class Clothing extends Product {
+
+    sizeChartLink;
+
+    constructor(productDetails) {
+      super(productDetails);
+      this.sizeChartLink = productDetails.sizeChartLink;
+    }
+
+    getSizeChart() {
+      return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`;
+    }
 }
 
 
@@ -723,8 +783,15 @@ export const products = [
     ]
   }
 ].map((productDetails)=> {
+
+  if(productDetails.type === 'clothing') {
+      return new Clothing(productDetails);
+  }
+  
   return new Product(productDetails);
+  
+  
 });
 
 
-console.log(products);
+
