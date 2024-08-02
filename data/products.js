@@ -1,3 +1,5 @@
+// I will access the product data from the backend
+
 import { currencyFormat } from "../scripts/utils/money.js";
 
 export function getProduct(productId) {
@@ -10,6 +12,7 @@ export function getProduct(productId) {
           matchingItem = product;
       }
   });
+  
 
   return matchingItem;
 }
@@ -140,7 +143,46 @@ export class Appliance extends Product{
 
 }
 
+// That how we take data from the backend and then convert the json object into the Javascript and store inside the array or object
+export let products = [];
 
+export function loadProduct(fun) {
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', () => {
+
+        products = JSON.parse(xhr.response).map((productDetails) => {
+
+          // if (Array.isArray(productDetails.type) &&
+          //     productDetails.type.includes('instructionLink') &&
+          //     productDetails.type.includes('warrantyLink')) {
+          //   return new Appliance(productDetails);
+          // }
+        
+          if(productDetails.type === 'clothing') {
+              return new Clothing(productDetails);
+          }
+          
+          return new Product(productDetails);
+        
+        });
+
+        console.log(('successfuly load the data'));
+
+        fun();
+
+        console.log(products);
+
+    });
+    xhr.open('GET', 'https://supersimplebackend.dev/products');
+    xhr.send();
+
+}
+
+
+
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -845,6 +887,7 @@ export const products = [
   
   
 });
+*/
 
 
 

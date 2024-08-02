@@ -1,148 +1,153 @@
 import {cart, addToCart, calculateCartQuantity} from "../data/cart.js";
-import {products} from "../data/products.js";
+import {products, loadProduct} from "../data/products.js";
 import {currencyFormat} from "./utils/money.js"
 
 
-
+// This method is also called as callback function
+loadProduct(renderAmazonHTML);
 // our code doesn't look organized so we would be using funcion to store the data
 
-function updateCartQuantity() {
+function renderAmazonHTML() {
 
-    const cartQuantity = calculateCartQuantity();
+    function updateCartQuantity() {
 
-    document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
+        const cartQuantity = calculateCartQuantity();
 
-}
+        document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
 
-// when the page load it should display the cart Quantity
-updateCartQuantity();
+    }
 
-
-// storing the timeout in object because each product has it own timeout
-
-function displayAddedMsg(productId) {
-
-      const addMessagetimeOut = {};
-
-      // Check if there's a previous timeout for this
-      // product. If there is, we should stop it.
-      const previousTimeoutId = addMessagetimeOut[productId];
-
-      if(previousTimeoutId) {
-        clearTimeout(previousTimeoutId);
-      }
-
-      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
-
-      // adding a new class name for styling
-
-      addedMessage.classList.add('added-to-cart-visible');
-
-      const timeOutId = setTimeout(() => {
-        addedMessage.classList.remove('added-to-cart-visible');
-      },2000);
-
-      // storing in the addMessagetimeOut object along with the poductId
-      addMessagetimeOut[productId] = timeOutId;
-
-}
+    // when the page load it should display the cart Quantity
+    updateCartQuantity();
 
 
+    // storing the timeout in object because each product has it own timeout
 
-// Generate Html page 
-let html = '';
+    function displayAddedMsg(productId) {
 
-products.forEach((product) => {
-    // console.log(product);
+          const addMessagetimeOut = {};
 
-    html += `<div class="product-container">
-          <div class="product-image-container">
-            <img class="product-image"
-              src="${product.image}">
-          </div>
+          // Check if there's a previous timeout for this
+          // product. If there is, we should stop it.
+          const previousTimeoutId = addMessagetimeOut[productId];
 
-          <div class="product-name limit-text-to-2-lines">
-            ${product.name}
-          </div>
+          if(previousTimeoutId) {
+            clearTimeout(previousTimeoutId);
+          }
 
-          <div class="product-rating-container">
-            <img class="product-rating-stars"
-              src='${product.getRating()}'>
-            <div class="product-rating-count link-primary">
-              ${product.rating.count}
-            </div>
-          </div>
+          const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
 
-          <div class="product-price">
-            ${product.getPrice()}
-          </div>
+          // adding a new class name for styling
 
-          <div class="product-quantity-container">
-            <select class="js-quantity-selector-${product.id}">
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
+          addedMessage.classList.add('added-to-cart-visible');
 
-          ${product.getSizeChart()}
+          const timeOutId = setTimeout(() => {
+            addedMessage.classList.remove('added-to-cart-visible');
+          },2000);
 
-          ${product.getInstructionLink()}
+          // storing in the addMessagetimeOut object along with the poductId
+          addMessagetimeOut[productId] = timeOutId;
 
-          ${product.getWarrantyLink()}
+    }
 
-          <div class="product-spacer"></div>
 
-          <div class="added-to-cart js-added-to-cart-${product.id}">
-            <img src="images/icons/checkmark.png">
-            Added
-          </div>
 
-          <button class="add-to-cart-button button-primary js-cart-button" data-add-cart="${product.id}">
-            Add to Cart
-          </button>
-        </div>`
+    // Generate Html page 
+    let html = '';
 
-});
+    products.forEach((product) => {
+        // console.log(product);
 
-// we have html attribute that is  data-attribute 
-// when I click on the add to card it will provide me the data(productId) of that list
+        html += `<div class="product-container">
+              <div class="product-image-container">
+                <img class="product-image"
+                  src="${product.image}">
+              </div>
 
-document.querySelector('.js-products-grid').innerHTML = html;
+              <div class="product-name limit-text-to-2-lines">
+                ${product.name}
+              </div>
 
-// Select add to cart using the forEach loop
+              <div class="product-rating-container">
+                <img class="product-rating-stars"
+                  src='${product.getRating()}'>
+                <div class="product-rating-count link-primary">
+                  ${product.rating.count}
+                </div>
+              </div>
 
-document.querySelectorAll('.js-cart-button')
-.forEach((button) => {
-    button.addEventListener('click', () => {
+              <div class="product-price">
+                ${product.getPrice()}
+              </div>
 
-        //  product has a same name but id will unquie so increment the product using the ID
-        const productId = button.dataset.addCart;
+              <div class="product-quantity-container">
+                <select class="js-quantity-selector-${product.id}">
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
 
-        // selector quantity is get by using the dom
-        // dom gives us the value in the string so convert it into number
+              ${product.getSizeChart()}
 
-        const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+              ${product.getInstructionLink()}
 
-      // function 
-        addToCart(productId, quantity);
+              ${product.getWarrantyLink()}
 
-        // quantity will be update on the header of the amazon
-        updateCartQuantity();
+              <div class="product-spacer"></div>
 
-        // display added msg on the page using the classList and set the opacity to 1
-        displayAddedMsg(productId);
+              <div class="added-to-cart js-added-to-cart-${product.id}">
+                <img src="images/icons/checkmark.png">
+                Added
+              </div>
+
+              <button class="add-to-cart-button button-primary js-cart-button" data-add-cart="${product.id}">
+                Add to Cart
+              </button>
+            </div>`
 
     });
 
-});
+    // we have html attribute that is  data-attribute 
+    // when I click on the add to card it will provide me the data(productId) of that list
+
+    document.querySelector('.js-products-grid').innerHTML = html;
+
+    // Select add to cart using the forEach loop
+
+    document.querySelectorAll('.js-cart-button')
+    .forEach((button) => {
+        button.addEventListener('click', () => {
+
+            //  product has a same name but id will unquie so increment the product using the ID
+            const productId = button.dataset.addCart;
+
+            // selector quantity is get by using the dom
+            // dom gives us the value in the string so convert it into number
+
+            const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+
+          // function 
+            addToCart(productId, quantity);
+
+            // quantity will be update on the header of the amazon
+            updateCartQuantity();
+
+            // display added msg on the page using the classList and set the opacity to 1
+            displayAddedMsg(productId);
+
+        });
+
+    });
+
+}
 
 
 
