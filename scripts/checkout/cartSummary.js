@@ -13,21 +13,21 @@ export function renderCartSummary() {
       cart.forEach((cartItem) => {
 
         const productId = cartItem.productId;
-        
+
         const matchingItem = getProduct(productId);
 
-        if (!matchingItem) {
-          // console.error(`Product with ID ${productId} not found.`);
+        if(!matchingItem){
           return;
         }
 
         const deliveryId = cartItem.deliveryOptionId;
 
         const deliveryOption = getDelivery(deliveryId);
-        if (!deliveryOption) {
-          console.error(`Delivery option with ID ${deliveryId} not found.`);
-          return;
-        }
+
+        // if (!deliveryOption) {
+        //   console.error(`Delivery option with ID ${deliveryId} not found.`);
+        //   return;
+        // }
         
         const formatDate = calculateDeliveryDate(deliveryOption);
         

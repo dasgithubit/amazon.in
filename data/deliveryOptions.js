@@ -29,7 +29,6 @@ export function getDelivery(deliveryId) {
     });
 
     return deliveryOption;
-
 }
 
 export function validDeliveryOption(deliveryId) {

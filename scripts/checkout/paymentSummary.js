@@ -18,6 +18,7 @@ export function renderPaymentSummary() {
         deliveryPrice += delivery.priceCents;
 
         cartQunatity += cartItem.quantity;
+        
     });
 
     const totalPriceBeforeTax = totalCartPrice + deliveryPrice;

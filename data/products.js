@@ -2,21 +2,6 @@
 
 import { currencyFormat } from "../scripts/utils/money.js";
 
-export function getProduct(productId) {
-
-  let matchingItem;
-
-  products.forEach((product) => {
-
-      if(product.id === productId) {
-          matchingItem = product;
-      }
-  });
-  
-
-  return matchingItem;
-}
-
 export class Product{
 
   id;
@@ -171,8 +156,6 @@ export function loadProduct(fun) {
 
         fun();
 
-        console.log(products);
-
     });
     xhr.open('GET', 'https://supersimplebackend.dev/products');
     xhr.send();
@@ -180,6 +163,20 @@ export function loadProduct(fun) {
 }
 
 
+export function getProduct(productId) {
+
+  let matchingItem;
+
+  products.forEach((product) => {
+    
+    if(product.id === productId) {
+          matchingItem = product;
+      }
+  });
+
+  return matchingItem;
+
+}
 
 
 /*

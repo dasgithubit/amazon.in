@@ -18,6 +18,7 @@ describe('test suite: Order Summary', () => {
         <div class="js-checkout-header"></div>
         
     `;
+
     spyOn(localStorage,'getItem').and.callFake(() => {
         return JSON.stringify([
             {
@@ -32,6 +33,7 @@ describe('test suite: Order Summary', () => {
             }
         ]);
     });
+    
         loadFromStorage();
 
         renderCartSummary();
