@@ -1,6 +1,7 @@
 import { renderCartSummary } from "../../scripts/checkout/cartSummary.js";
 import { loadFromStorage,cart } from "../../data/cart.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
+import { loadProduct } from "../../data/products.js";
 
 
 describe('test suite: Order Summary', () => {
@@ -8,6 +9,17 @@ describe('test suite: Order Summary', () => {
     const productId1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
     const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
 
+
+    // jasmine also provide the done function to wait for the code to execute
+    beforeAll((done) => {
+        // loadProduct is asynchronous code it will send the msg to my backend but it won't wait
+        // and it goes to the next line
+        loadProduct(()=> {
+            done();
+        });  
+    });
+
+    
     beforeEach( () => {
 
         spyOn(localStorage,'setItem');
@@ -33,13 +45,13 @@ describe('test suite: Order Summary', () => {
             }
         ]);
     });
-    
+
         loadFromStorage();
 
         renderCartSummary();
 
         renderPaymentSummary();
-});
+    });
 
     it('display order summary', () => {
 
@@ -94,3 +106,4 @@ describe('test suite: Order Summary', () => {
     });
 
 });
+
