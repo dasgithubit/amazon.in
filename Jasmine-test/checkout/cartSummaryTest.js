@@ -1,7 +1,7 @@
 import { renderCartSummary } from "../../scripts/checkout/cartSummary.js";
 import { loadFromStorage,cart } from "../../data/cart.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
-import { loadProduct } from "../../data/products.js";
+import { loadProductFetch } from "../../data/products.js";
 
 
 describe('test suite: Order Summary', () => {
@@ -14,9 +14,10 @@ describe('test suite: Order Summary', () => {
     beforeAll((done) => {
         // loadProduct is asynchronous code it will send the msg to my backend but it won't wait
         // and it goes to the next line
-        loadProduct(()=> {
+
+        loadProductFetch().then(() => {
             done();
-        });  
+        })
     });
 
     

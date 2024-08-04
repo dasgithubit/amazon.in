@@ -137,6 +137,14 @@ export function updateDeliveryOption(productId, deliveryId) {
     }
 }
 
+function loadCartFetch() {
+    fetch('https://supersimplebackend.dev/cart').then((cartData) => {
+        console.log(cartData);
+    })
+}
+
+loadCartFetch();
+
 
 export function loadCart(fun) {
 

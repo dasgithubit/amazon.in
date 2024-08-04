@@ -1,7 +1,7 @@
 import {renderCartSummary} from "./checkout/cartSummary.js";
 import {renderPaymentSummary} from "./checkout/paymentSummary.js"
 import {renderCheckoutHeader} from "./checkout/checkoutHeader.js"
-import { loadProduct } from "../data/products.js";
+import {  loadProductFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 // import "../data/cart-class.js"
 // import "../data/car.js"
@@ -21,24 +21,26 @@ import { loadCart } from "../data/cart.js";
 // It takes a array of promises
 
 Promise.all([
-    new Promise((resolve) => {
-    
-        loadProduct(() => {
-            
-            // we can give a value to the resolve('value');
-            resolve('hello');
-        });
-    
-    }),
 
-    new Promise((resolve) => {
-        loadCart(() => {
-            resolve();
-        });
-    })
+    loadProductFetch(),
 
-]).then((value) => {
-    console.log(value)
+    // new Promise((resolve) => {
+    
+    //     loadProduct(() => {
+    //         // we can give a value to the resolve('value');
+    //         resolve('hello');
+    //     });
+    
+    // }),
+
+    // new Promise((resolve) => {
+    //     loadCart(() => {
+    //         resolve();
+    //     });
+    // })
+
+]).then(() => {
+    // console.log(value)
     renderCartSummary();
     renderPaymentSummary();
     renderCheckoutHeader();

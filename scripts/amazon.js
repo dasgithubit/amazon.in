@@ -1,10 +1,16 @@
 import {cart, addToCart, calculateCartQuantity} from "../data/cart.js";
-import {products, loadProduct} from "../data/products.js";
+import {products, loadProductFetch} from "../data/products.js";
 import {currencyFormat} from "./utils/money.js"
 
 
 // This method is also called as callback function
+
+loadProductFetch().then(()=> {
+  renderAmazonHTML();
+})
+/*
 loadProduct(renderAmazonHTML);
+*/
 // our code doesn't look organized so we would be using funcion to store the data
 
 function renderAmazonHTML() {

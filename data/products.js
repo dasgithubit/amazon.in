@@ -131,6 +131,39 @@ export class Appliance extends Product{
 // That how we take data from the backend and then convert the json object into the Javascript and store inside the array or object
 export let products = [];
 
+export function loadProductFetch() {
+  const promise = fetch('https://supersimplebackend.dev/products')
+
+    .then((response) => {
+
+    return response.json();
+
+  })
+  .then((productData) => {
+
+    products = productData.map((productDetails) => {
+
+      if(productDetails.type === 'clothing') {
+          return new Clothing(productDetails);
+      }
+      
+      return new Product(productDetails);
+    
+    });
+
+    console.log(('successfuly load the data'));
+
+  });
+
+  return promise;
+}
+/*
+loadProductFetch().then(() => {
+  console.log('next step');
+});
+*/
+
+/*
 export function loadProduct(fun) {
 
     const xhr = new XMLHttpRequest();
@@ -161,6 +194,7 @@ export function loadProduct(fun) {
     xhr.send();
 
 }
+    */
 
 
 export function getProduct(productId) {
