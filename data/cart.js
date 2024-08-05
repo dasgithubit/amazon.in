@@ -133,32 +133,59 @@ export function updateDeliveryOption(productId, deliveryId) {
 
         matchingItem.deliveryOptionId = deliveryId;
         saveData();
-
     }
 }
 
-function loadCartFetch() {
-    fetch('https://supersimplebackend.dev/cart').then((cartData) => {
-        console.log(cartData);
-    })
+
+export function loadFetchCart() {
+    const promise = fetch('https://www.supersimplebackend.dev/cart').then((response) => {
+        const content = response.headers.get('Content-Type');
+        if(content && content.includes('application/json')){
+            return response.json();
+        }
+        else {
+            return response.text();
+        }
+    }).then((data) => {
+        try{
+            if( typeof data === 'String') {
+                const parsedData =  JSON.parse(data);
+                console.log(parsedData);
+            }
+            else {
+                console.log(data);
+
+            }
+        }
+        catch(error) {
+            console.log('error occured ', error);
+        }
+    }).catch((error) => {
+        console.log('Unexpected error occured', error);
+    });
+
+    return promise;
 }
 
-loadCartFetch();
 
 
-export function loadCart(fun) {
 
+
+/*
+export function loadCart() {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
-
-       console.log(xhr.response);
-    fun();
-
-    });
-    xhr.open('GET', 'https://supersimplebackend.dev/cart');
+        const cartData = xhr.response;
+        console.log(cartData);
+    })
+    xhr.open('GET', 'https://www.supersimplebackend.dev/cart');
     xhr.send();
-
+    
 }
+
+loadCart();
+*/
+
 
 
 

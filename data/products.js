@@ -131,6 +131,7 @@ export class Appliance extends Product{
 // That how we take data from the backend and then convert the json object into the Javascript and store inside the array or object
 export let products = [];
 
+
 export function loadProductFetch() {
   const promise = fetch('https://supersimplebackend.dev/products')
 
@@ -153,17 +154,37 @@ export function loadProductFetch() {
 
     console.log(('successfuly load the data'));
 
+  })/*.catch((error) => {
+    console.log('error has been occured to load the data from the backend', error);
   });
+  */
+
+  // if the error occur while trying to fetch the data from backend
+  // it will directly goes to the catch block
+  // Inside the promise we can use default error by using throw keyword
 
   return promise;
 }
+
+
+
+
 /*
 loadProductFetch().then(() => {
   console.log('next step');
 });
 */
 
+// To get the data from the backend javaScript has inbuilt class XMLHTTPSRequest 
+// xml is a asynchromous code so it does not wait for the code to finish and directly goes to the next step.
+// It takes time to get the data from the backend through internet , we cannot tell how long would it takes, so we create a call back function using the addEventListener
+
+// To get the data from the backend we also have the fetch() it uses promises, so we don't have to create a call back function to load the asynchronous code
+// fetch takes one parameter that is the url of the page 
+
+
 /*
+
 export function loadProduct(fun) {
 
     const xhr = new XMLHttpRequest();
@@ -187,6 +208,12 @@ export function loadProduct(fun) {
 
         console.log(('successfuly load the data'));
 
+        // Inside the call back function we can also handle error by using addEventListener if there is network issue
+        // xhr.addEventListener('error', () => {
+        //     console.log('error has been occured');
+        // });
+
+
         fun();
 
     });
@@ -194,7 +221,9 @@ export function loadProduct(fun) {
     xhr.send();
 
 }
-    */
+
+*/
+    
 
 
 export function getProduct(productId) {
