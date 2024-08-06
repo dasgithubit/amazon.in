@@ -43,7 +43,6 @@ export class Product{
 }
 
 
-
 // Class provide us inbuit fetaure to get the today's date
 // date has a inbuilt method
 // const date = new Date();
@@ -82,7 +81,6 @@ export class Product{
 // object.method1();
 
 // Inside arrow function this will not show undefined it will point out to the outside object
-
 
 // some product has more specification here we can use the concept inheritance
 
@@ -133,6 +131,7 @@ export let products = [];
 
 
 export function loadProductFetch() {
+
   const promise = fetch('https://supersimplebackend.dev/products')
 
     .then((response) => {
@@ -154,16 +153,16 @@ export function loadProductFetch() {
 
     console.log(('successfuly load the data'));
 
-  })/*.catch((error) => {
+  }).catch((error) => {
     console.log('error has been occured to load the data from the backend', error);
   });
-  */
+  
 
   // if the error occur while trying to fetch the data from backend
   // it will directly goes to the catch block
   // Inside the promise we can use default error by using throw keyword
-
   return promise;
+
 }
 
 

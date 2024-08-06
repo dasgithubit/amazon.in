@@ -6,7 +6,6 @@ describe('Test suite: Add to cart', () => {
     beforeEach(() => {
         // we have to create a fake localStorage because in the actual file it already save data
         spyOn(localStorage,'setItem');
-
     });
 
     it('Existing cart item', () => {

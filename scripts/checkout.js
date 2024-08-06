@@ -29,6 +29,7 @@ import { loadFetchCart } from "../data/cart.js";
 
 // practice the async await
 
+/*
 async function name() {
     try{
         // we can create a default error 
@@ -43,23 +44,30 @@ async function name() {
     }
 }
 
-name().then(() => {
-    console.log('next step');
-})
+name();
+
+*/
 
 
 
-/*
 async function loadData(){
-    await loadProductFetch();
-    await loadFetchCart();
+
+    try{
+        // throw 'New error';
+
+        await loadProductFetch();
+        await loadFetchCart();
+
+    } catch(error) {
+        console.log('unexpected error');
+    }
     renderCartSummary();
     renderPaymentSummary();
     renderCheckoutHeader();
 }
 
 loadData();
-*/
+
 
 
 

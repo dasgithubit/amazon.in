@@ -4,7 +4,6 @@ import { validDeliveryOption } from "./deliveryOptions.js";
 
 export let cart = [];
 
-
 export function loadFromStorage() {
 
     cart = JSON.parse(localStorage.getItem('cart')) || [{
