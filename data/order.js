@@ -1,3 +1,5 @@
+import { products } from "./products.js";
+
 export const orders = JSON.parse(localStorage.getItem('order')) || [];
 
 export function storeOrders(order) {
@@ -8,3 +10,4 @@ export function storeOrders(order) {
 function saveData() {
     localStorage.setItem('order', JSON.stringify(orders));
 }
+

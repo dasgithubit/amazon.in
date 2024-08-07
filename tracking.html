@@ -88,5 +88,18 @@
         </div>
       </div>
     </div>
+
+    <script>
+     // url parameter let us save data directly to the url
+     // the parameter is in the property value pair 
+     // we can access the url parameter with the help of script
+     // to get the url out we have URL class
+
+     const url = new URL(window.location.href);
+     console.log(url.searchParams.get('orderId'));
+     console.log(url.searchParams.get('productId'));
+
+      
+    </script>
   </body>
 </html>
