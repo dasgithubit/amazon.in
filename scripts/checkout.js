@@ -1,8 +1,9 @@
 import {renderCartSummary} from "./checkout/cartSummary.js";
 import {renderPaymentSummary} from "./checkout/paymentSummary.js"
 import {renderCheckoutHeader} from "./checkout/checkoutHeader.js"
-import { loadProductFetch } from "../data/products.js";
-import { loadFetchCart } from "../data/cart.js";
+import { products, loadProductsFetch } from "../data/products.js";
+import { loadCartFetch } from "../data/cart.js";
+
 // import "../data/cart-class.js"
 // import "../data/car.js"
 // import "../data/backend-practice.js"
@@ -49,26 +50,31 @@ name();
 */
 
 
+async function loadData() {
 
-async function loadData(){
+    try {
+      await Promise.all([
+        loadProductsFetch(),
+        loadCartFetch()
+      ]);
 
-    try{
-        // throw 'New error';
+      console.log('Final products:', products);
 
-        await loadProductFetch();
-        await loadFetchCart();
-
-    } catch(error) {
-        console.log('unexpected error');
+      if (products.length === 0) {
+        console.error('Products not loaded correctly.');
     }
+  
     renderCartSummary();
     renderPaymentSummary();
     renderCheckoutHeader();
+  
+    } catch (error) {
+      console.log('Unexpected error:', error);
+    }
+  
 }
-
+  
 loadData();
-
-
 
 
 /*

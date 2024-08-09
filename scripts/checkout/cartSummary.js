@@ -1,10 +1,12 @@
-import {cart, removeFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption, loadFromStorage} from "../../data/cart.js";
-import { products, getProduct} from "../../data/products.js";
+import {cart, removeFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption, loadFromStorage, loadCartFetch} from "../../data/cart.js";
+import { getProduct, products,} from "../../data/products.js";
 import {currencyFormat} from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import {deliveryOptions,getDelivery,calculateDeliveryDate} from "../../data/deliveryOptions.js";
 import {renderPaymentSummary} from "./paymentSummary.js"
 import { renderCheckoutHeader } from "./checkoutHeader.js";
+
+
 
 export function renderCartSummary() {
 
@@ -12,14 +14,13 @@ export function renderCartSummary() {
 
       cart.forEach((cartItem) => {
 
-        const productId = cartItem.productId;
+        const matchingItem = getProduct(cartItem.productId); 
 
-        const matchingItem = getProduct(productId);
-
-        if(!matchingItem){
+        if (!matchingItem) {
+          // console.error(`Product with ID ${cartItem.productId} not found.`);
           return;
-        }
-
+      }
+        
         const deliveryId = cartItem.deliveryOptionId;
 
         const deliveryOption = getDelivery(deliveryId);
@@ -78,7 +79,7 @@ export function renderCartSummary() {
           </div>
       </div>
         
-        `
+        `;
 
       });
 

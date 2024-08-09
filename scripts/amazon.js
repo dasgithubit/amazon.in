@@ -1,11 +1,11 @@
 import {cart, addToCart, calculateCartQuantity} from "../data/cart.js";
-import {products, loadProductFetch} from "../data/products.js";
+import {products, loadProductsFetch} from "../data/products.js";
 import {currencyFormat} from "./utils/money.js"
 
 
 // This method is also called as callback function
 
-loadProductFetch().then(()=> {
+loadProductsFetch().then(()=> {
   renderAmazonHTML();
 })
 /*
@@ -101,11 +101,8 @@ function renderAmazonHTML() {
                 </select>
               </div>
 
+              
               ${product.getSizeChart()}
-
-              ${product.getInstructionLink()}
-
-              ${product.getWarrantyLink()}
 
               <div class="product-spacer"></div>
 

@@ -2,6 +2,20 @@
 
 import { currencyFormat } from "../scripts/utils/money.js";
 
+
+export function getProduct(productId) {
+  const id = String(productId);
+  let matchingProduct;
+
+  products.forEach((product) => {
+    if (String(product.id) === id) {
+      matchingProduct = product;
+    }
+  });
+
+  return matchingProduct;
+}
+
 export class Product{
 
   id;
@@ -31,13 +45,13 @@ export class Product{
     return '';
   }
 
-  getInstructionLink() {
-    return '';
-  }
+  // getInstructionLink() {
+  //   return '';
+  // }
 
-  getWarrantyLink() {
-    return '';
-  }
+  // getWarrantyLink() {
+  //   return '';
+  // }
 
   
 }
@@ -97,13 +111,13 @@ export class Clothing extends Product {
       return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`;
     }
 
-    getInstructionLink() {
-      return '';
-    }
+    // getInstructionLink() {
+    //   return '';
+    // }
 
-    getWarrantyLink(){
-      return '';
-    }
+    // getWarrantyLink(){
+    //   return '';
+    // }
 }
 
 export class Appliance extends Product{
@@ -129,41 +143,29 @@ export class Appliance extends Product{
 // That how we take data from the backend and then convert the json object into the Javascript and store inside the array or object
 export let products = [];
 
-
-export function loadProductFetch() {
-
-  const promise = fetch('https://supersimplebackend.dev/products')
-
-    .then((response) => {
-
+export function loadProductsFetch() {
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
     return response.json();
-
-  })
-  .then((productData) => {
-
-    products = productData.map((productDetails) => {
-
-      if(productDetails.type === 'clothing') {
-          return new Clothing(productDetails);
+  }).then((productsData) => {
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
       }
-      
       return new Product(productDetails);
-    
     });
 
-    console.log(('successfuly load the data'));
-
+    console.log('load products');
   }).catch((error) => {
-    console.log('error has been occured to load the data from the backend', error);
+    console.log('Unexpected error. Please try again later.');
   });
-  
 
-  // if the error occur while trying to fetch the data from backend
-  // it will directly goes to the catch block
-  // Inside the promise we can use default error by using throw keyword
   return promise;
-
 }
+
+
+
 
 
 
@@ -225,20 +227,6 @@ export function loadProduct(fun) {
     
 
 
-export function getProduct(productId) {
-
-  let matchingItem;
-
-  products.forEach((product) => {
-    
-    if(product.id === productId) {
-          matchingItem = product;
-      }
-  });
-
-  return matchingItem;
-
-}
 
 
 /*

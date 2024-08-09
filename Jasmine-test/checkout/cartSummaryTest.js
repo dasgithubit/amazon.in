@@ -11,13 +11,12 @@ describe('test suite: Order Summary', () => {
 
 
     // jasmine also provide the done function to wait for the code to execute
-    beforeAll((done) => {
+    beforeAll( async() => {
         // loadProduct is asynchronous code it will send the msg to my backend but it won't wait
         // and it goes to the next line
+        // By using await we can first execute the promises
 
-        loadProductFetch().then(() => {
-            done();
-        })
+        await loadProductFetch();
     });
 
     

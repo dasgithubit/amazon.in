@@ -136,6 +136,35 @@ export function updateDeliveryOption(productId, deliveryId) {
 }
 
 
+export async function loadCartFetch() {
+
+    try{
+        const response = await fetch('https://supersimplebackend.dev/cart');
+
+        if(!response.ok) {
+            throw new Error('HTTPS error');
+        }
+
+        const content = response.headers.get('content-type');
+
+        if(content && content.includes('application/json')) {
+            const jsonData =  await response.json();
+            console.log('Json data: ', jsonData);
+        }
+
+        else {
+            const textData =  await response.text();
+            console.log('Text data: ', textData);
+        }
+
+    } catch(error) {
+        console.log('unexpected error!');
+    }  
+}
+
+
+
+/*
 export function loadFetchCart() {
     const promise = fetch('https://www.supersimplebackend.dev/cart').then((response) => {
         const content = response.headers.get('Content-Type');
@@ -165,6 +194,8 @@ export function loadFetchCart() {
 
     return promise;
 }
+
+*/
 
 
 

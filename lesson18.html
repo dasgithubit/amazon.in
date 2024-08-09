@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exercise 18</title>
+    </head>
+    <body>
+        <script>
+
+            // to get the dat from the backend 
+            // JavaScript has inbuilt class XMLHttpRequest 
+            // It is an asynchronous code it does not wait for the code to excute and goes to the next step
+            // So we can use a call function using the addEventListener
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.addEventListener('load', () => {
+                const greeting = xhr.response;
+                console.log(greeting);
+            });
+            xhr.open('GET', 'https://supersimplebackend.dev/greeting');
+            xhr.send();
+
+
+            // using the fetch
+
+            fetch('https://supersimplebackend.dev/greeting').then((response) => {
+
+                return response.text();   
+            }).then((msg) => {
+                console.log(msg);
+            });
+            
+
+            /*
+            fetch('https://supersimplebackend.dev/greeting').then((response) => {
+
+                const content = response.headers.get('Content');
+
+                if(content && content.includes('application/json')){
+                    return response.json();
+                }
+                else {
+                    return response.text();
+                }
+
+            }).then((data) => {
+
+                if(typeof data === 'String'){
+                    const parsedData = JSON.parse(data);
+                    console.log(parsedData);
+                }
+
+                else (
+                    console.log(data)
+                )
+
+            }).catch((error) => {
+                console.log('unexpected error occured');
+            })
+
+            */
+
+            async function getRequest() {
+
+                try{
+
+                    const response = await fetch('https://supersimplebackend.dev/greeting');
+
+                    if(!response.ok){
+                        throw new Error('Http error ');
+                    }
+                    const data = await response.text();
+                    console.log(data);
+
+                }
+                catch(error) {
+                    console.log('Unexpected error', error);
+
+                }  
+            }
+
+            getRequest();
+
+
+            async function postRequest() {
+
+                const response = await fetch('https://supersimplebackend.dev/greeting', {
+
+                    method : 'POST',
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    },
+                    body : JSON.stringify({
+                        name : "Subrata"
+                    })
+            });
+
+            if(!response.ok) {
+                throw new Error('Https Error');
+            }
+
+            const promise =  await response.text();
+
+            return promise;
+
+            }
+
+            // immediately invoked async function expression
+            
+            // we can use await for the post request promise to the top level function 
+            // because we cannot use await directly it should be inside the async function
+
+            (async () => {
+                const result = await postRequest();
+                console.log(result);
+            })();
+
+
+            // Try making the get request to the amazon.com to will get the CORS error
+            // Cross origin Resource sharing
+
+            try{
+
+                fetch('https://amazon.com').then((response) => {
+                return response.json();
+                }).then((data) => {
+                    console.log(data);
+                }).catch((error) => {
+                    console.log('CORS error. Your request was blocked by the backend.');
+                })
+
+            } catch(error) {
+                console.log('CORS error. Your request was blocked by the backend');
+
+            }
+
+
+
+            fetch('https://supersimplebackend.dev/greeting', {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            }).then((response) => {
+
+                if(response.status >= 400) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const contentType = response.headers.get('content-type');
+                if(contentType && contentType.includes('application/json')) {
+                    return response.json();
+                }
+                else {
+                    return response.text();
+                }
+
+            }).then((data) => {
+                console.log(data);
+
+            }).catch((error) => {
+                if(error.status === 400){
+                    console.log('response.json()');
+                }
+
+                else {
+                    console.log('Network error');
+                }
+            })
+
+
+
+
+            
+
+            
+            
+
+            
+
+
+
+           
+            
+
+        </script>
+
+    </body>
+</html>
