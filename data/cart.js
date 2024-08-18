@@ -162,6 +162,12 @@ export async function loadCartFetch() {
     }  
 }
 
+export function resetCart() {
+    cart = [];
+    saveData();
+
+}
+
 
 
 /*

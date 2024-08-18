@@ -7,20 +7,23 @@ import {currencyFormat} from "./utils/money.js"
 
 loadProductsFetch().then(()=> {
   renderAmazonHTML();
-})
+  
+});
 /*
 loadProduct(renderAmazonHTML);
 */
 // our code doesn't look organized so we would be using funcion to store the data
 
+
+
 function renderAmazonHTML() {
+
+    const addMessagetimeOut = {}; 
 
     function updateCartQuantity() {
 
         const cartQuantity = calculateCartQuantity();
-
         document.querySelector('.js-cartQuantity').innerHTML = cartQuantity;
-
     }
 
     // when the page load it should display the cart Quantity
@@ -30,8 +33,6 @@ function renderAmazonHTML() {
     // storing the timeout in object because each product has it own timeout
 
     function displayAddedMsg(productId) {
-
-          const addMessagetimeOut = {};
 
           // Check if there's a previous timeout for this
           // product. If there is, we should stop it.
@@ -53,18 +54,39 @@ function renderAmazonHTML() {
 
           // storing in the addMessagetimeOut object along with the poductId
           addMessagetimeOut[productId] = timeOutId;
-
     }
-
 
 
     // Generate Html page 
     let html = '';
 
-    products.forEach((product) => {
+    // products.forEach((product) => {
         // console.log(product);
+        const url = new URL(window.location.href);
+        const search = url.searchParams.get('search');
 
-        html += `<div class="product-container">
+        let filteredProduct = products;
+
+        if(search){
+          filteredProduct = products.filter((product) => {
+              let matchingkeywords = false;
+
+              product.keywords.forEach((keyword) => {
+                if(keyword.toLowerCase().includes(search.toLowerCase())) {
+                  matchingkeywords = true;
+                }
+              });
+
+              return matchingkeywords || 
+
+              product.name.toLowerCase().includes(search.toLowerCase());
+
+          });
+        }
+
+        filteredProduct.forEach((product) => {
+
+          html += `<div class="product-container">
               <div class="product-image-container">
                 <img class="product-image"
                   src="${product.image}">
@@ -101,7 +123,6 @@ function renderAmazonHTML() {
                 </select>
               </div>
 
-              
               ${product.getSizeChart()}
 
               <div class="product-spacer"></div>
@@ -114,7 +135,8 @@ function renderAmazonHTML() {
               <button class="add-to-cart-button button-primary js-cart-button" data-add-cart="${product.id}">
                 Add to Cart
               </button>
-            </div>`
+            </div>
+            `;
 
     });
 
@@ -124,9 +146,9 @@ function renderAmazonHTML() {
     document.querySelector('.js-products-grid').innerHTML = html;
 
     // Select add to cart using the forEach loop
-
     document.querySelectorAll('.js-cart-button')
     .forEach((button) => {
+
         button.addEventListener('click', () => {
 
             //  product has a same name but id will unquie so increment the product using the ID
@@ -147,10 +169,34 @@ function renderAmazonHTML() {
             displayAddedMsg(productId);
 
         });
-
     });
 
+
+    document.querySelector('.js-search-button')
+    .addEventListener('click', () => {
+        const search = document.querySelector('.js-search-bar').value;
+
+        window.location.href = `amazon.html?search=${search}`;
+    });
+
+
+    document.querySelector('.js-search-bar')
+    .addEventListener('keydown', (event) => {
+
+      if(event.key === 'Enter') {
+        const search = document.querySelector('.js-search-bar').value;
+        window.location.href = `amazon.html?search=${search}`;
+
+      }
+        
+    })
+
+
+
 }
+
+
+
 
 
 

@@ -49,7 +49,6 @@ name();
 
 */
 
-
 async function loadData() {
 
     try {
@@ -58,7 +57,7 @@ async function loadData() {
         loadCartFetch()
       ]);
 
-      console.log('Final products:', products);
+      
 
       if (products.length === 0) {
         console.error('Products not loaded correctly.');

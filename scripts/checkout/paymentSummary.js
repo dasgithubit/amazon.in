@@ -1,4 +1,4 @@
-import {cart, loadCartFetch} from "../../data/cart.js"
+import {cart, loadCartFetch, resetCart} from "../../data/cart.js"
 import { getProduct } from "../../data/products.js"
 import { getDelivery } from "../../data/deliveryOptions.js";
 import { currencyFormat } from "../utils/money.js";
@@ -13,7 +13,7 @@ export function renderPaymentSummary() {
     cart.forEach((cartItem) => {
 
         const product = getProduct(cartItem.productId);
-        if(!product){
+        if(!product) {
           return;
         }
         totalCartPrice += product.priceCents * cartItem.quantity;
@@ -90,9 +90,10 @@ document.querySelector('.js-place-order')
     storeOrders(order);
 
   } catch(error) {
-    console.log('unexpected error. Try after');
-
+    console.log('unexpected error. Try after some time');
   }
+
+  resetCart();
   
   window.location.href = 'orders.html';
 
